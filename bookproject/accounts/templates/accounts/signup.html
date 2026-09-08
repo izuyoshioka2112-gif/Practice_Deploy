@@ -1,0 +1,39 @@
+{% extends 'login.html' %}
+
+{% block title %}アカウント作成{% endblock %}
+
+{% block nav_right %}
+<a class="nav-link mx-3" href="{% url 'login' %}">ログイン</a>
+{% endblock %}
+
+{% block form_area %}
+<h1 class="m-4">新規アカウント作成</h1>
+    <form method="post" class="p-4 m-4 bg-light border border-success rounded form-group">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-danger py-2">
+            <ul class="mb-0 small">
+                {% if form.username.errors %}
+                    <li>そのIDは既に登録済み、または利用できません。</li>
+                {% endif %}
+                {% if form.password2.errors %}
+                    <li>パスワードと確認用パスワードが一致していません。</li>
+                {% elif form.password1.errors or form.password2.errors %}
+                    <li>パスワードは8文字以上、半角英数字または記号のみで再度お試しください。</li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        <label>ID</label>
+        <input type="text" name="username" class="form-control mb-4" placeholder="ユーザー ID" value="{{ form.username.value|default_if_none:'' }}" required>
+        <label>Ps</label>
+        <input type="password" name="password1" class="form-control mb-4" placeholder="パスワード">
+        <label>Ps確認用</label>
+        <input type="password" name="password2" class="form-control " placeholder="パスワード確認用">
+        <small class="mb-2 d-block textstart">パスワードは8文字以上で入力してください</small>
+        {% if form.error %}
+        <span class="mb=2 small text-danger d-block text-start">利用できないユーザーIDやパスワードの可能性があります。再度ご確認ください</span>
+        {% endif %}
+        <button type="submit" class="btn btn-success m-2" href="{% url 'accounts:login' %}">アカウント作成!</button>
+    </form>
+    {% endblock %}

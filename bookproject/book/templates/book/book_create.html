@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}書籍作成{% endblock %}
+
+{% block content %}
+<div class="p-4 rounded shadow my-4 border border-primary">
+  <h4 class="mb-4 fw-bold text-dark ">書籍の作成</h4>
+  <form method="POST">{% csrf_token %}
+    {{form.as_p}}
+    <div class="mt-4">
+      <input type="submit" value="作成する" class="btn btn-outline-primary m-2">
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
